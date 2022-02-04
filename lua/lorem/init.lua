@@ -1,29 +1,38 @@
-local function printLorem(count)
-    words = vim.fn.readfile("words")
+local function printLorem()
+    words = vim.fn.readfile("/home/craggle/code/vim/lorem-nvim/words")
 
     math.randomseed(os.time())
-    commaDelay = math.random(2,9)
-    periodDelay = math.random(6,14)
-    paragraphDelay = math.random(4,10)
+    commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
+    periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
+    paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
 
     s = ""
     delimiter = " "
-    len = vim.v.count1
-    for i=1,len do
-        local num = math.random(1,156)
+    count = vim.v.count1
+    for i=1,count do
+        local count = 0
+        for _ in pairs(words) do count = count + 1 end
+        local num = math.random(1, count)
 
-        if i == 1 or delimiter == ". " then word = words[num]:gsub("^%l", string.upper)
-        else word = words[num] end
+        -- Capitalize first letter of a sentence.
+        if i == 1 or delimiter == ". " or delimiter == ".\n" then
+            word = words[num]:gsub("^%l", string.upper)
+        else
+            word = words[num]
+        end
 
+        -- Set delimiter based on punctuation delays.
         if periodDelay == 0 then
-            paragraphDelay = paragraphDelay - 1
-            delimiter = ". "
+            periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
             if paragraphDelay == 0 then
-                delimiter = delimiter.."\n"
-                paragraphDelay = math.random(4,10) end
-            periodDelay = math.random(6, 16)
-        elseif i == len then delimiter = ". "
-        elseif commaDelay == 0 then delimiter = ", "; commaDelay = math.random(3, 9)
+                paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
+                delimiter = ".\n"
+            else
+                delimiter = ". "
+            end
+            paragraphDelay = paragraphDelay - 1
+        elseif i == count then delimiter = ".\n"
+        elseif commaDelay == 0 then delimiter = ", "; commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
         else delimiter = " " end
 
         s = s..word..delimiter
