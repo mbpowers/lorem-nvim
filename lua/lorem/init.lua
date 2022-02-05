@@ -10,9 +10,9 @@ local function printLorem()
     delimiter = " "
     count = vim.v.count1
     for i=1,count do
-        local count = 0
-        for _ in pairs(words) do count = count + 1 end
-        local num = math.random(1, count)
+        local len = 0
+        for _ in pairs(words) do len = len + 1 end
+        local num = math.random(1, len)
 
         -- Capitalize first letter of a sentence.
         if i == 1 or delimiter == ". " or delimiter == ".\n" then
@@ -22,7 +22,8 @@ local function printLorem()
         end
 
         -- Set delimiter based on punctuation delays.
-        if periodDelay == 0 then
+        if i == count then delimiter = ".\n"
+        elseif periodDelay == 0 then
             periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
             if paragraphDelay == 0 then
                 paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
@@ -31,7 +32,6 @@ local function printLorem()
                 delimiter = ". "
             end
             paragraphDelay = paragraphDelay - 1
-        elseif i == count then delimiter = ".\n"
         elseif commaDelay == 0 then delimiter = ", "; commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
         else delimiter = " " end
 
