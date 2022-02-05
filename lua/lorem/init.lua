@@ -1,5 +1,5 @@
 local function printLorem()
-    words = vim.fn.readfile("/home/craggle/code/vim/lorem-nvim/words")
+    words = vim.fn.readfile(vim.g["lorem#wordspath"])
 
     math.randomseed(os.time())
     commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
