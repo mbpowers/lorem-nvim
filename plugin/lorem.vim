@@ -10,7 +10,7 @@ let &cpo = s:save_cpo " and restore after
 unlet s:save_cpo
 
 let g:loaded_lorem = 1
-let g:lorem#wordspath = get(g:, 'lorem#wordspath', 'words')
+let g:lorem#wordspath = get(g:, 'lorem#wordspath', getenv("XDG_CONFIG_HOME").'/nvim/plugged/lorem-nvim/words')
 let g:lorem#commamin = get(g:, 'lorem#commamin', 5)
 let g:lorem#commamax = get(g:, 'lorem#commamax', 11)
 let g:lorem#periodmin = get(g:, 'lorem#periodmin', 6)
