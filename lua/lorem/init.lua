@@ -1,7 +1,8 @@
 local function printLorem()
     words = vim.fn.readfile(vim.g["lorem#wordspath"])
 
-    math.randomseed(os.time())
+    -- Set seed based on time, generate delays randomly between min and max
+    math.randomseed(vim.fn.reltimefloat(vim.fn.reltime()))
     commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
     periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
     paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
