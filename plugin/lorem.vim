@@ -18,4 +18,3 @@ let g:lorem#paragraphmin = get(g:, 'lorem#paragraphmin', 4)
 let g:lorem#paragraphmax = get(g:, 'lorem#paragraphmax', 10)
 
 nnoremap <Plug>Lorem :<C-u>Lorem<CR>
-nmap <leader>l <Plug>Lorem
