@@ -19,7 +19,7 @@ call plug#end()
 </details>
 
 ## Use
-The command will take a count. For example:
+The command will take a count. For example, if the key is mapped to `<leader>l`:
 
 |      input    |  output |
 |---------------|---------|
