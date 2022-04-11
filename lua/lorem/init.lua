@@ -1,25 +1,24 @@
 local function printLorem()
-    words = vim.fn.readfile(vim.g["lorem#wordspath"])
+    local words = vim.fn.readfile(vim.g["lorem#wordspath"])
 
     -- Set seed based on time, generate delays randomly between min and max
     math.randomseed(vim.fn.reltimefloat(vim.fn.reltime()))
-    commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
-    periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
-    paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
+    local commaDelay = math.random(vim.g["lorem#commamin"],vim.g["lorem#commamax"])
+    local periodDelay = math.random(vim.g["lorem#periodmin"],vim.g["lorem#periodmax"])
+    local paragraphDelay = math.random(vim.g["lorem#paragraphmin"],vim.g["lorem#paragraphmax"])
 
-    s = ""
-    delimiter = " "
-    count = vim.v.count1
+    local s = ""
+    local delimiter = " "
+    local count = vim.v.count1
     for i=1,count do
         local len = 0
         for _ in pairs(words) do len = len + 1 end
         local num = math.random(1, len)
 
         -- Capitalize first letter of a sentence.
+        local word = words[num]
         if i == 1 or delimiter == ". " or delimiter == ".\n" then
-            word = words[num]:gsub("^%l", string.upper)
-        else
-            word = words[num]
+            word = word:gsub("^%l", string.upper)
         end
 
         -- Set delimiter based on punctuation delays.
